@@ -1,0 +1,56 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/ubuntu
+{
+  "name": "Ubuntu",
+  "dockerFile": "Dockerfile",
+  // Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
+  "features": {
+    // "ghcr.io/guiyomh/features/golangci-lint:0": {},
+    // "ghcr.io/devcontainers-community/npm-features/typescript:1": {},
+    "ghcr.io/devcontainers/features/docker-outside-of-docker:1": {}
+  },
+  // https://containers.dev/features
+  // ghcr.io/devcontainers/features/aws-cli:1
+  "mounts": [
+    "source=/var/run/docker.sock,target=/var/run/docker.sock,type=bind",
+    "source=${localEnv:HOME}${localEnv:USERPROFILE}/.aws,target=/home/vscode/.aws,type=bind,consistency=cached",
+    "source=${localEnv:HOME}${localEnv:USERPROFILE}/.ssh,target=/home/vscode/.ssh,type=bind,consistency=cached",
+    "source=${localEnv:HOME}${localEnv:USERPROFILE}/.gitconfig,target=/home/vscode/.gitconfig,type=bind,consistency=cached",
+    "source=${localEnv:HOME}${localEnv:USERPROFILE}/.config,target=/home/vscode/.config,type=bind,consistency=cached"
+  ],
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "terminal.integrated.profiles.linux": {
+          "Bash": {
+            "path": "/bin/bash"
+          }
+        },
+        "terminal.integrated.defaultProfile.windows": "Bash",
+        "editor.formatOnSave": true,
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+      },
+      "extensions": [
+        "ms-vscode-remote.remote-containers",
+        "humao.rest-client",
+        "766b.go-outliner",
+        "golang.go",
+        "ms-azuretools.vscode-docker",
+        "esbenp.prettier-vscode",
+        "jebbs.plantuml",
+        "qhoekman.language-plantuml",
+        "Mebrahtom.plantumlpreviewer",
+        "ms-vscode.makefile-tools",
+        "hashicorp.terraform",
+        "well-ar.vscode-wiremock",
+        "firsttris.vscode-jest-runner",
+        "anweber.vscode-httpyac",
+        "ms-python.python",
+        "rioj7.vscode-behave"
+      ]
+    }
+  },
+  "forwardPorts": [443, 3000],
+  "containerUser": "vscode",
+  "runArgs": ["--privileged"]
+}

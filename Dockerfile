@@ -18,13 +18,6 @@ RUN apt-get update \
     libxrandr2 libxrender1 gconf-service fonts-liberation libappindicator1 xdg-utils build-essential zlib1g-dev \
     libncurses5-dev libgdbm-dev libnss3-dev libssl-dev libreadline-dev libffi-dev pipx apt-utils groff tk-dev
 
-# Yarn & Groff needed for AWS CLI
-RUN curl -sS http://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
-    && sudo apt-key export 86E50310 | sudo gpg --dearmor -o /usr/share/keyrings/yarn.gpg
-
-RUN echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/yarn.gpg] http://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list \
-    && apt-get update \
-    && apt-get install -y yarn
 
 # Install the AWS CLI tools
 RUN mkdir -p /tmp/aws \
@@ -97,8 +90,8 @@ RUN mkdir /home/${USERNAME}/.ssh \
 # Terraform
 RUN wget -O - https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg \
     && echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(grep -oP '(?<=UBUNTU_CODENAME=).*' /etc/os-release || lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list \
-    && sudo apt update && sudo apt install terraform
-
+    && sudo apt update && sudo apt install terraform packer
+    
 # Hub
 RUN mkdir -p /home/$USERNAME/.local/share \
     && chown $USERNAME:$USERNAME /home/$USERNAME/.local/share \

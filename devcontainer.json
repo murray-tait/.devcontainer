@@ -52,5 +52,6 @@
   },
   "forwardPorts": [443, 3000],
   "containerUser": "vscode",
-  "runArgs": ["--privileged"]
+  "runArgs": ["--privileged"],
+  "initializeCommand": "mkdir -p ${localEnv:HOME}/.aws ${localEnv:HOME}/.ssh ${localEnv:HOME}/.config && touch ${localEnv:HOME}/.gitconfig"
 }

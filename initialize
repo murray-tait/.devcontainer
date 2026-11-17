@@ -1,0 +1,3 @@
+#!/bin/sh
+echo "Initializing on Unix..."
+mkdir -p ${localEnv:HOME}/.aws ${localEnv:HOME}/.ssh ${localEnv:HOME}/.config && touch ${localEnv:HOME}/.gitconfig

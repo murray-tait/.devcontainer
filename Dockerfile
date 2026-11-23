@@ -1,4 +1,4 @@
-FROM --platform=linux/amd64 debian:12.11
+FROM --platform=linux/amd64 debian:12.15
 
 ENV DEBIAN_FRONTEND=noninteractive
 
@@ -16,7 +16,8 @@ RUN apt-get update \
     libxcursor1 libxdamage1 libxtst6 libappindicator3-1 libasound2 libatk1.0-0 libc6 libcairo2 libcups2 libxfixes3 \
     libdbus-1-3 libexpat1 libgcc1 libnspr4 libgbm1 libpangocairo-1.0-0 libstdc++6 libx11-6 libx11-xcb1 libxcb1 libxext6 \
     libxrandr2 libxrender1 gconf-service fonts-liberation libappindicator1 xdg-utils build-essential zlib1g-dev \
-    libncurses5-dev libgdbm-dev libnss3-dev libssl-dev libreadline-dev libffi-dev pipx apt-utils groff tk-dev
+    libncurses5-dev libgdbm-dev libnss3-dev libssl-dev libreadline-dev libffi-dev pipx apt-utils groff tk-dev \
+    libsqlite3-dev liblzma-dev libbz2-dev
 
 
 # Install the AWS CLI tools
@@ -48,7 +49,7 @@ RUN apt-get update \
     && locale-gen en_US.UTF-8
 
 # GO - https://golang.org/doc/install
-RUN curl -sL https://golang.org/dl/go1.22.1.linux-$(dpkg --print-architecture).tar.gz | tar -xz -C /usr/local
+RUN curl -sL https://golang.org/dl/go1.27.4.linux-$(dpkg --print-architecture).tar.gz | tar -xz -C /usr/local
 ENV PATH=$PATH:/usr/local/go/bin
 
 # Github CLI
@@ -60,7 +61,7 @@ RUN sudo mkdir -p -m 755 /etc/apt/keyrings \
     && apt install -y gh
 
 # Poetry
-RUN pipx install poetry==1.8.0
+RUN pipx install poetry==2.5.1
 
 # Clean up
 RUN apt-get autoremove -y \
@@ -120,14 +121,14 @@ RUN curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh | ba
     && export NVM_DIR="$HOME/.nvm" \
     && . "$NVM_DIR/nvm.sh" \
     && . "$NVM_DIR/bash_completion" \
-    && nvm install v22.12.0
+    && nvm install v26.13.1
 
 RUN curl -fsSL https://pyenv.run | bash \
     && export PYENV_ROOT="/home/$USERNAME/.pyenv" \
     && export PATH="$PYENV_ROOT/bin:$PATH" \
     && eval "$(pyenv init -)" \
-    && pyenv install 3.11.9 \
-    && pyenv global 3.11.9
+    && pyenv install 3.13.18 \
+    && pyenv global 3.13.18
 
 # installing chrome
 RUN CHROME_VERSION=$(curl https://googlechromelabs.github.io/chrome-for-testing/LATEST_RELEASE_STABLE); \
